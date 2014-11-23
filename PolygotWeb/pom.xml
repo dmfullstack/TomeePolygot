@@ -28,10 +28,60 @@
         <dependency>
             <groupId>org.apache.openejb</groupId>
             <artifactId>javaee-api</artifactId>
+        </dependency>    
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Polygot-nosql</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>5.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.myfaces.core</groupId>
+            <artifactId>myfaces-api</artifactId>
+            <version>2.1.15</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.myfaces.core</groupId>
+            <artifactId>myfaces-impl</artifactId>
+            <version>2.1.15</version>
+            <scope>runtime</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.core</groupId>
+            <artifactId>deltaspike-core-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-data-module-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.deltaspike.modules</groupId>
+            <artifactId>deltaspike-data-module-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.18.2-GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+            <version>1.8.1</version>
         </dependency>
     </dependencies>
 
     <build>
+        <finalName>PolygotWeb</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -57,39 +107,42 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>2.9</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>javax</groupId>
-                                    <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>6.0</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.openejb.maven</groupId>
                 <artifactId>tomee-maven-plugin</artifactId>
                 <version>1.7.1</version>
                 <configuration>
+                    <synchronization>
+                        <extensions>
+                            <extension>.class</extension>
+                        </extensions>
+                        <updateOnlyExtensions>
+                            <updateOnlyExtension>.html</updateOnlyExtension>
+                            <updateOnlyExtension>.js</updateOnlyExtension>
+                            <updateOnlyExtension>.jcss</updateOnlyExtension>
+                            <updateOnlyExtension>.css</updateOnlyExtension>
+                        </updateOnlyExtensions>
+                    </synchronization>
                     <libs>
-                        <lib>org.eclipse.persistence:eclipselink:2.5.2</lib>
-                        <lib>org.eclipse.persistence:org.eclipse.persistence.nosql:2.5.2</lib>
+                        <lib>org.eclipse.persistence:eclipselink:${eclipselink.version}</lib>
+                        <lib>org.eclipse.persistence:org.eclipse.persistence.nosql:${eclipselink.version}</lib>
+                        <lib>org.apache.derby:derbyclient:10.11.1.1</lib>
+                        <lib>org.mongodb:mongo-java-driver:2.12.4</lib>
                     </libs>
-                </configuration>
+                    <simpleLog>true</simpleLog>
+                    <reloadOnUpdate>true</reloadOnUpdate>
+                    <removeDefaultWebapps>true</removeDefaultWebapps>
+                </configuration>            
             </plugin>
         </plugins>
     </build>
-
+    <repositories>
+        <repository>
+            <url>http://repository.primefaces.org/</url>
+            <id>PrimeFaces-maven-lib</id>
+            <layout>default</layout>
+            <name>Repository for library PrimeFaces-maven-lib</name>
+        </repository>
+    </repositories>
 </project>

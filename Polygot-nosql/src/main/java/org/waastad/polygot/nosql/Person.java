@@ -3,41 +3,45 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.waastad.polygot.relational;
+package org.waastad.polygot.nosql;
 
 import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import org.eclipse.persistence.nosql.annotations.Field;
+import org.waastad.polygot.relational.Customer;
 
 /**
  *
- * @author Helge Waastad <helge.waastad@waastad.org>
+ * @author Helge Waastad <helge.waastad@datametrix.no>
  */
 @Entity
-public class Customer implements Serializable {
+public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "name")
+    @GeneratedValue
+    @Field(name = "_id")
+    private String id;
+    @Field(name = "name")
     private String name;
+    @ManyToOne(targetEntity = Customer.class)
+    private Customer customer;
 
-    public Customer() {
+    public Person() {
     }
 
-    public Customer(String name) {
+    public Person(String name) {
         this.name = name;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -51,10 +55,10 @@ public class Customer implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Customer)) {
+        if (!(object instanceof Person)) {
             return false;
         }
-        Customer other = (Customer) object;
+        Person other = (Person) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -63,7 +67,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "org.waastad.polygot.relational.Customer[ id=" + id + " ]";
+        return "org.waastad.polygot.nosql.Person[ id=" + id + " ]";
     }
 
     public String getName() {
@@ -72,6 +76,14 @@ public class Customer implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
 }

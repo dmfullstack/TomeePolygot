@@ -6,12 +6,8 @@
         <artifactId>PolygotMaster</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>Polygot-relational</artifactId>
+    <artifactId>Polygot-nosql</artifactId>
     <packaging>jar</packaging>
-    <properties>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.openejb</groupId>
@@ -26,8 +22,18 @@
             <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derbyclient</artifactId>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.nosql</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>Polygot-relational</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
         </dependency>
     </dependencies>
 </project>

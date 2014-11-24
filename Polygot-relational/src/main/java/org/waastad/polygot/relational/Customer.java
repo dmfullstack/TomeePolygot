@@ -11,13 +11,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Helge Waastad <helge.waastad@waastad.org>
  */
+@NamedQueries({
+    @NamedQuery(name = Customer.FIND_ALL, query = "SELECT t FROM Customer t")
+})
 @Entity
 public class Customer implements Serializable {
+
+    public static final String FIND_ALL = "Customer.FindAll";
 
     private static final long serialVersionUID = 1L;
     @Id

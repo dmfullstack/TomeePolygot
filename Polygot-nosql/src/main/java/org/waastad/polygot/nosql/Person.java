@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import org.eclipse.persistence.nosql.annotations.Field;
 import org.waastad.polygot.relational.Customer;
 
@@ -17,8 +19,13 @@ import org.waastad.polygot.relational.Customer;
  *
  * @author Helge Waastad <helge.waastad@datametrix.no>
  */
+@NamedQueries({
+    @NamedQuery(name = Person.FIND_ALL, query = "SELECT t FROM Person t")
+})
 @Entity
 public class Person implements Serializable {
+
+    public static final String FIND_ALL = "Person.FindAll";
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,8 +34,8 @@ public class Person implements Serializable {
     private String id;
     @Field(name = "name")
     private String name;
-    @ManyToOne(targetEntity = Customer.class)
-    private Customer customer;
+//    @ManyToOne(targetEntity = Customer.class)
+//    private Customer customer;
 
     public Person() {
     }
@@ -59,10 +66,7 @@ public class Person implements Serializable {
             return false;
         }
         Person other = (Person) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
@@ -77,13 +81,13 @@ public class Person implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+//
+//    public Customer getCustomer() {
+//        return customer;
+//    }
+//
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
 
 }

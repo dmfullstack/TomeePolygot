@@ -9,7 +9,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <eclipselink.version>2.4.2</eclipselink.version>
+        <eclipselink.version>2.5.2</eclipselink.version>
+        <tomee.version>2.0.0-SNAPSHOT</tomee.version>
+        <openejb.version>5.0.0-SNAPSHOT</openejb.version>
     </properties>
     <modules>
         <module>PolygotWeb</module>
@@ -27,6 +29,11 @@
             <dependency>
                 <groupId>org.eclipse.persistence</groupId>
                 <artifactId>eclipselink</artifactId>
+                <version>${eclipselink.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.persistence</groupId>
+                <artifactId>org.eclipse.persistence.jpa</artifactId>
                 <version>${eclipselink.version}</version>
             </dependency>
             <dependency>
@@ -87,4 +94,15 @@
             <url>http://repository.apache.org/snapshots</url>
         </repository>
     </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>apache-m2-snapshot-plugin</id>
+            <name>Apache Snapshot Repository</name>
+            <url>http://repository.apache.org/snapshots</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>ethlo</id>
+            <url>http://ethlo.com/maven</url>
+        </pluginRepository>
+    </pluginRepositories>
 </project>

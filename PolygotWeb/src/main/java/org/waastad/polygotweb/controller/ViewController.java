@@ -11,69 +11,63 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.omnifaces.cdi.ViewScoped;
 import org.waastad.polygot.nosql.Person;
 import org.waastad.polygot.relational.Customer;
+import org.waastad.polygotweb.repository.CustomerRepository;
+import org.waastad.polygotweb.repository.PersonRepository;
 
 /**
  *
  * @author Helge Waastad <helge.waastad@datametrix.no>
  */
-@Stateless
+@SessionScoped
 @Named
 public class ViewController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<Customer> customers = new ArrayList<>();
-    private List<Person> persons = new ArrayList<>();
-//    @Inject
-//    private EntityManager em;
-    @PersistenceUnit(unitName = "composite-pu")
-    private EntityManagerFactory emf;
+    private List<Customer> customers;// = new ArrayList<>();
+    private List<Person> persons;// = new ArrayList<>();
+    @Inject
+    private EntityManager em;
+//    @PersistenceUnit(unitName = "composite-pu")
+//    private EntityManagerFactory emf;
+
+    @Inject
+    private CustomerRepository customerRepository;
+    @Inject
+    private PersonRepository personRepository;
 
     @PostConstruct
     public void init() {
         System.out.println("Fetching.....");
-//        TypedQuery<Customer> query = em.createQuery("SELECT t FROM Customer t", Customer.class);
-//        customers = query.getResultList();
-//        TypedQuery<Person> query2 = em.createQuery("SELECT t FROM Person t", Person.class);
-//        persons = query2.getResultList();
+//        customers = customerRepository.findAll();
+//        persons = personRepository.findAll();
     }
 
     public void updateTables(ActionEvent event) {
         System.out.println("Fetching.....");
-        EntityManager em = emf.createEntityManager();
-//        em.getTransaction().begin();
-//        TypedQuery<Customer> query = em.createQuery("SELECT t FROM Customer t", Customer.class);
-//        customers = query.getResultList();
-
-        TypedQuery<Person> query2 = em.createQuery("SELECT t FROM Person t", Person.class);
-        persons = query2.getResultList();
-//        em.getTransaction().commit();
+        customers = customerRepository.findAll();
+        persons = personRepository.findAll();
     }
 
     public void addCustomer(ActionEvent event) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
         Customer c = new Customer("kunde-" + new Date().toString());
-        em.persist(c);
-        em.getTransaction().commit();
+        customerRepository.save(c);
+
     }
 
     public void addPerson(ActionEvent event) {
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
         Person p = new Person("kunde-" + new Date().toString());
-        em.persist(p);
-        em.flush();
-        em.close();
+        personRepository.save(p);
     }
 
     public List<Customer> getCustomers() {

@@ -10,15 +10,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.ejb.Stateless;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import org.omnifaces.cdi.ViewScoped;
+import org.omnifaces.util.Messages;
 import org.waastad.polygot.nosql.Person;
 import org.waastad.polygot.relational.Customer;
 import org.waastad.polygotweb.repository.CustomerRepository;
@@ -28,18 +24,16 @@ import org.waastad.polygotweb.repository.PersonRepository;
  *
  * @author Helge Waastad <helge.waastad@datametrix.no>
  */
-@SessionScoped
+@ViewScoped
 @Named
 public class ViewController implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private List<Customer> customers;// = new ArrayList<>();
-    private List<Person> persons;// = new ArrayList<>();
-    @Inject
-    private EntityManager em;
-//    @PersistenceUnit(unitName = "composite-pu")
-//    private EntityManagerFactory emf;
+    private List<Customer> customers = new ArrayList<>();
+    private Customer customer;
+    private List<Person> persons = new ArrayList<>();
+    private Person person;
 
     @Inject
     private CustomerRepository customerRepository;
@@ -48,9 +42,9 @@ public class ViewController implements Serializable {
 
     @PostConstruct
     public void init() {
-        System.out.println("Fetching.....");
-//        customers = customerRepository.findAll();
-//        persons = personRepository.findAll();
+        System.out.println("Initial Fetching.....");
+        customers = customerRepository.findAll();
+        persons = personRepository.findAll();
     }
 
     public void updateTables(ActionEvent event) {
@@ -61,13 +55,38 @@ public class ViewController implements Serializable {
 
     public void addCustomer(ActionEvent event) {
         Customer c = new Customer("kunde-" + new Date().toString());
-        customerRepository.save(c);
+        customers.add(customerRepository.save(c));
+        Messages.addGlobalInfo("Customer saved");
+    }
 
+    public void deleteCustomer(ActionEvent event) {
+        try {
+            customer = customerRepository.findBy(customer.getId());
+            customerRepository.remove(customer);
+            customers.remove(customer);
+            Messages.addGlobalInfo("Customer deleted");
+        } catch (Exception e) {
+            Messages.addGlobalError(e.getMessage());
+        }
+    }
+
+    public void deletePerson(ActionEvent event) {
+        person = personRepository.findBy(person.getId());
+        personRepository.remove(person);
+        persons.remove(person);
+        Messages.addGlobalInfo("Person deleted");
     }
 
     public void addPerson(ActionEvent event) {
-        Person p = new Person("kunde-" + new Date().toString());
-        personRepository.save(p);
+
+        if (customer == null) {
+            Messages.addGlobalWarn("Please select customer");
+        } else {
+            Person p = new Person("kunde-" + new Date().toString());
+            p.setCustomer(customer);
+            persons.add(personRepository.save(p));
+            Messages.addGlobalInfo("Person saved");
+        }
     }
 
     public List<Customer> getCustomers() {
@@ -84,6 +103,22 @@ public class ViewController implements Serializable {
 
     public void setPersons(List<Person> persons) {
         this.persons = persons;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
 }

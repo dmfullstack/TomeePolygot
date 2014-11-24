@@ -9,8 +9,16 @@
     </h:head>
     <h:body>
         <h:form prependId="false">
+            <p:growl autoUpdate="true"/>
             <p:panel id="panel" header="Panel">
-                <p:dataTable value="#{viewController.customers}" var="item">
+                <p:contextMenu for="customers">
+                    <p:menuitem value="Delete" update="customers" icon="ui-icon-close" actionListener="#{viewController.deleteCustomer(event)}"/>
+                </p:contextMenu>
+                <p:dataTable id="customers" value="#{viewController.customers}" var="item" rowKey="#{item.id}"
+                             selectionMode="single" selection="#{viewController.customer}">
+                    <f:facet name="header">
+                        Customers - derby DB
+                    </f:facet>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Id"/>
@@ -24,7 +32,14 @@
                         <h:outputText value="#{item.name}"/>
                     </p:column>
                 </p:dataTable>
-                <p:dataTable value="#{viewController.persons}" var="item">
+                <p:contextMenu for="persons">
+                    <p:menuitem value="Delete" update="persons" icon="ui-icon-close" actionListener="#{viewController.deletePerson(event)}"/>
+                </p:contextMenu>
+                <p:dataTable id="persons" value="#{viewController.persons}" var="item" rowKey="#{item.id}"
+                             selectionMode="single" selection="#{viewController.person}">
+                    <f:facet name="header">
+                        Persons - Mongodb
+                    </f:facet>
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Id"/>
@@ -37,17 +52,14 @@
                         </f:facet>
                         <h:outputText value="#{item.name}"/>
                     </p:column>
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Customer"/>
-                        </f:facet>
-                        <h:outputText value="#{item.customer}"/>
+                    <p:column headerText="Customer">
+                        <h:outputText value="#{item.customer.name}"/>
                     </p:column>
                 </p:dataTable>
                 <f:facet name="footer">
                     <p:commandButton value="Do" actionListener="#{viewController.updateTables(event)}" update="@form"/>
-                    <p:commandButton value="New Customer" actionListener="#{viewController.addCustomer(event)}" update="@form"/>
-                    <p:commandButton value="New Person" actionListener="#{viewController.addPerson(event)}" update="@form"/>
+                    <p:commandButton value="New Customer" actionListener="#{viewController.addCustomer(event)}" update="customers"/>
+                    <p:commandButton value="New Person" actionListener="#{viewController.addPerson(event)}" update="persons"/>
                 </f:facet>
             </p:panel>
         </h:form>

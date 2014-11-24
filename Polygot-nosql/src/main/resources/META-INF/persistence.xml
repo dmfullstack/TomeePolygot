@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-  <persistence-unit name="MongoPU" transaction-type="RESOURCE_LOCAL">
-    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-    <class>org.waastad.polygot.nosql.Person</class>
-    <properties>
-      <property name="eclipselink.target-database" value="org.eclipse.persistence.nosql.adapters.mongo.MongoPlatform"/>
-      <property name="eclipselink.nosql.connection-spec" value="org.eclipse.persistence.nosql.adapters.mongo.MongoConnectionSpec"/>
-      <property name="eclipselink.nosql.property.mongo.port" value="27017"/>
-      <property name="eclipselink.nosql.property.mongo.host" value="localhost"/>
-      <property name="eclipselink.nosql.property.mongo.db" value="polyglot"/>
+    <persistence-unit name="MongoPU" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>org.waastad.polygot.nosql.Person</class>
+        <properties>
+            <property name="eclipselink.target-database" value="org.eclipse.persistence.nosql.adapters.mongo.MongoPlatform"/>
+            <property name="eclipselink.nosql.connection-spec" value="org.eclipse.persistence.nosql.adapters.mongo.MongoConnectionSpec"/>
+            <property name="eclipselink.nosql.property.mongo.port" value="27017"/>
+            <property name="eclipselink.nosql.property.mongo.host" value="localhost"/>
+            <property name="eclipselink.nosql.property.mongo.db" value="polygot"/>
       
-      <property name="eclipselink.logging.level" value="FINEST"/>
-      <property name="eclipselink.logging.timestamp" value="false"/>
-      <property name="eclipselink.logging.thread" value="false"/>
-      <property name="eclipselink.logging.session" value="false"/>
-      <property name="eclipselink.logging.exceptions" value="false"/>
-      <property name="eclipselink.logging.connection" value="false"/>
-      <property name="eclipselink.composite-unit.member" value="true"/>
-    </properties>
-  </persistence-unit>
+            <!--  <property name="eclipselink.cache.query-results" value="true"/>
+            <property name="eclipselink.weaving" value="static"/>
+            <property name="eclipselink.jdbc.connections.wait-timeout" value="20"/>
+            <property name="eclipselink.jdbc.timeout" value="20"/>
+            <property name="eclipselink.persistence-context.flush-mode" value="commit"/>
+            <property name="eclipselink.persistence-context.close-on-commit" value="true"/>
+            <property name="eclipselink.persistence-context.persist-on-commit" value="false"/>
+            <property name="eclipselink.jpa.uppercase-column-names" value="true"/>-->
+      
+            <property name="eclipselink.logging.level" value="FINEST"/>
+            <property name="eclipselink.logging.timestamp" value="false"/>
+            <property name="eclipselink.logging.thread" value="false"/>
+            <property name="eclipselink.logging.session" value="false"/>
+            <property name="eclipselink.logging.exceptions" value="false"/>
+            <property name="eclipselink.logging.connection" value="false"/>
+   
+            <property name="eclipselink.composite-unit.member" value="true"/>
+        </properties>
+    </persistence-unit>
 </persistence>

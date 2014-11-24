@@ -5,7 +5,7 @@
         <jar-file>../lib/Polygot-nosql-1.0-SNAPSHOT.jar</jar-file>
         <properties>
             <property name="eclipselink.composite-unit" value="true" />
-            <property name="eclipselink.logging.level" value="FINE" />
+            <property name="eclipselink.logging.level" value="FINEST" />
             <property name="eclipselink.logging.timestamp" value="false" />
             <property name="eclipselink.logging.thread" value="false" />
             <property name="eclipselink.logging.session" value="false" />

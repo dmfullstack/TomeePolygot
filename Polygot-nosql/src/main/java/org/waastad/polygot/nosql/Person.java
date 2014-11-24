@@ -6,13 +6,16 @@
 package org.waastad.polygot.nosql;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import org.eclipse.persistence.nosql.annotations.Field;
+import org.eclipse.persistence.nosql.annotations.DataFormatType;
+import org.eclipse.persistence.nosql.annotations.NoSql;
 import org.waastad.polygot.relational.Customer;
 
 /**
@@ -23,6 +26,7 @@ import org.waastad.polygot.relational.Customer;
     @NamedQuery(name = Person.FIND_ALL, query = "SELECT t FROM Person t")
 })
 @Entity
+@NoSql(dataType = "persons", dataFormat = DataFormatType.MAPPED)
 public class Person implements Serializable {
 
     public static final String FIND_ALL = "Person.FindAll";
@@ -30,12 +34,13 @@ public class Person implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
-    @Field(name = "_id")
+    @Column(name = "_id")
     private String id;
-    @Field(name = "name")
+    @Column(name = "name")
     private String name;
-//    @ManyToOne(targetEntity = Customer.class)
-//    private Customer customer;
+    @ManyToOne(targetEntity = Customer.class)
+    @JoinColumn(name = "customer")
+    private Customer customer;
 
     public Person() {
     }
@@ -81,13 +86,13 @@ public class Person implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-//
-//    public Customer getCustomer() {
-//        return customer;
-//    }
-//
-//    public void setCustomer(Customer customer) {
-//        this.customer = customer;
-//    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
 }

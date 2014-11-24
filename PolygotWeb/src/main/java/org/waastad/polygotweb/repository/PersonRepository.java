@@ -11,7 +11,7 @@ import org.waastad.polygot.nosql.Person;
 
 /**
  *
- * @author Helge Waastad <helge.waastad@datametrix.no>
+ * @author Helge Waastad <helge.waastad@waastad.org>
  */
 @Repository
 public abstract class PersonRepository extends AbstractEntityRepository<Person, String>{

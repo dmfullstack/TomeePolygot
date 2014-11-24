@@ -22,7 +22,7 @@ import org.waastad.polygotweb.repository.PersonRepository;
 
 /**
  *
- * @author Helge Waastad <helge.waastad@datametrix.no>
+ * @author Helge Waastad <helge.waastad@waastad.org>
  */
 @ViewScoped
 @Named
@@ -54,7 +54,7 @@ public class ViewController implements Serializable {
     }
 
     public void addCustomer(ActionEvent event) {
-        Customer c = new Customer("kunde-" + new Date().toString());
+        Customer c = new Customer("customer-" + new Date().toString());
         customers.add(customerRepository.save(c));
         Messages.addGlobalInfo("Customer saved");
     }
@@ -82,7 +82,7 @@ public class ViewController implements Serializable {
         if (customer == null) {
             Messages.addGlobalWarn("Please select customer");
         } else {
-            Person p = new Person("kunde-" + new Date().toString());
+            Person p = new Person("person-" + new Date().toString());
             p.setCustomer(customer);
             persons.add(personRepository.save(p));
             Messages.addGlobalInfo("Person saved");

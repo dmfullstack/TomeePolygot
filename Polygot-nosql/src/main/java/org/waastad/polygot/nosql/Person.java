@@ -20,7 +20,7 @@ import org.waastad.polygot.relational.Customer;
 
 /**
  *
- * @author Helge Waastad <helge.waastad@datametrix.no>
+ * @author Helge Waastad <helge.waastad@waastad.org>
  */
 @NamedQueries({
     @NamedQuery(name = Person.FIND_ALL, query = "SELECT t FROM Person t")

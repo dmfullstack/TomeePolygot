@@ -11,7 +11,7 @@ import org.waastad.polygot.relational.Customer;
 
 /**
  *
- * @author Helge Waastad <helge.waastad@datametrix.no>
+ * @author Helge Waastad <helge.waastad@waastad.org>
  */
 @Repository
 public abstract class CustomerRepository extends AbstractEntityRepository<Customer, Long> {
